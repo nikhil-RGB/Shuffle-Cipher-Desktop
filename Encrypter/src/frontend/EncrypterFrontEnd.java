@@ -12,6 +12,13 @@ import java.util.Scanner;
 import java.awt.*;
 public final class EncrypterFrontEnd
 {
+	private static String session_psswd;
+	private static String abt_sessions="Session passwords allow you to save time while using the app\n"
+			+ "If the user sets a session password, all encryptions and decryptions will be performed with the sessions password provided\n"
+			+ "until the app is closed, or the session password is changed or removed.\n"
+			+ "To set a session password, click on the \"set session password\" option and enter the desired password.\n"
+			+ "To remove a session password, click on the \"remove session password\" option.\n"
+			+ "To view the current session password, click the \"view current session password\" option.";
 	private static String setPsswd="Would you like to password lock your encryption?\nThis will"
 			+ " prevent other users of this app from decrypting this message\n "
 			+ "unless they have your password.\n"
@@ -21,13 +28,15 @@ public final class EncrypterFrontEnd
 	
 	public static final String VIEW="main_panel.png";
 	public static final String CCP="cutcopy.png";
-	public static final String CONTACT="bleach.ichigo.anime@gmail.com";
-	public static final String WORK="https://bleachichigoanime.wixsite.com/website/my-work";
-	public static final String ABOUT="https://bleachichigoanime.wixsite.com/website";
+	public static final String CONTACT="javakingxi@gmail.com";
+	public static final String WORK="https://www.swingguiking.com/my-work";
+	public static final String ABOUT="https://www.swingguiking.com";
 	public static final String RULES="<html>Enter text into the first textbox and press on the encrypt<br>"
 			+ "button to encrypt it. To decrypt it, switch between encryption and decryption modes via the option on the menu bar<br>"
 			+ "You can use ctrl+c/v/x OR the buttons provided for copy paste and cut actions on the selected text in the text area.<br>"
 			+ "You can try storing encrypted text in a file/data base and decrypt it later on via the same application.<br>"
+			+ "Setting a password for your encryptions gives you further privacy, since other users of the app can't<br>"
+			+ "decrypt your text without your permission. Also see: Session Passwords.<br>"
 			+ "Happy Encryption!";
 	public static final String path="icon.png";
 	public static final ImageIcon img=new ImageIcon(CCP);
@@ -116,6 +125,27 @@ public final class EncrypterFrontEnd
         	if(mode.equals(CipherMode.ENCRYPT))
         	{
         	String password="";
+        	boolean skip_init=false;
+        	if(EncrypterFrontEnd.session_psswd!=null)
+        	{
+        		String options[]= {"Yes","No,custom password","No,no password"};
+        	    int response=JOptionPane.showOptionDialog(null,"A session password was detected, would you like\n"
+        	    		+ " to encrypt this message with the session password?\n"
+        	    		+ "Current sessions password: "+EncrypterFrontEnd.session_psswd,"Use Session Password?" ,JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        	    if(response==0)
+        	    {
+        	    	skip_init=true;
+        	    	password=EncrypterFrontEnd.session_psswd;
+        	    }
+        	    else if(response==2)
+        	    {
+        	    	skip_init=true;
+        	    	password=null;
+        	    }
+        	 }
+        	
+        	if(!skip_init)
+        	{
         	do 
         	{ 
         	password=JOptionPane.showInputDialog(null,setPsswd);
@@ -126,6 +156,9 @@ public final class EncrypterFrontEnd
         	}
         	}
         	while((password!=null)&&(!EncrypterFrontEnd.isValidPassword(password)));
+        	}
+        	
+        	
         	String add_line="";
         	 //If there's a password which is entered, then the first line 
         	 //of the encrypted message will
@@ -155,9 +188,20 @@ public final class EncrypterFrontEnd
         			return;
         		}
         		boolean flag=reader.nextBoolean();
+        		USER_PASSWORD_INPUT:
         		if(flag)
         		{
         			String psswd=reader.next();
+        			boolean skip_inp=psswd.equals(EncrypterFrontEnd.session_psswd);
+        			if(skip_inp)
+        			{
+        				break USER_PASSWORD_INPUT;
+        			}
+        			else if(EncrypterFrontEnd.session_psswd!=null)
+        			{
+        				JOptionPane.showMessageDialog(null,"Sessions Password does not match required password\n"
+        						+ "Please input the password this message was encrypted with\nto continue.");
+        			}
         			String userp="";
         			do
         			{
@@ -232,6 +276,66 @@ public final class EncrypterFrontEnd
 	public void setUpMenuBar()
 	{
 		mb=new JMenuBar();
+		//additional menu option-Session Password
+		JMenu session=new JMenu("Set/Remove Session Password");
+		JMenuItem set=new JMenuItem("Set Session Password");
+		JMenuItem remove= new JMenuItem("Remove Session Password");
+		JMenuItem view=new JMenuItem("View Session Password");
+		JMenuItem abt=new JMenuItem("About session passwords");
+		ActionListener active=(ae)->
+		{
+		 Object source=ae.getSource();
+		 if(source==set)
+		 {   String psswd="";
+		    do
+		    {
+			 psswd=JOptionPane.showInputDialog("Please enter the session password you'd like to set: ");
+		     if((!isValidPassword(psswd))&&(psswd!=null))
+		      {
+		    	 JOptionPane.showMessageDialog(null,"Invalid Password\n"
+		    	 		+ "Please note that passwords cannot have spaces and cannot be empty");
+		      }
+		      else 
+		      {break;}		     
+		     }
+		     while(true);
+		  if(psswd==null)
+		  {return;}
+		  EncrypterFrontEnd.session_psswd=psswd;
+		 }
+		 else if(source==remove)
+		 {   
+			 EncrypterFrontEnd.session_psswd=null;
+			 JOptionPane.showMessageDialog(null,"If a Session password was initialized,\nit has been removed");
+		 }
+		 else if(source==abt)
+		 {
+			 JOptionPane.showMessageDialog(null, abt_sessions);
+		 }
+		 else
+		 {
+			 String mssg="";
+			 if(EncrypterFrontEnd.session_psswd==null)
+			 {
+				 mssg="No Session Password has been set";
+			 }
+			 else
+			 {
+				 mssg="Session Password is: "+EncrypterFrontEnd.session_psswd;
+			 }
+			 JOptionPane.showMessageDialog(null,mssg);
+		 }
+		};
+		set.addActionListener(active);
+		remove.addActionListener(active);
+		abt.addActionListener(active);
+		view.addActionListener(active);
+		session.add(set);
+		session.add(remove);
+		session.add(view);
+		session.add(abt);
+		mb.add(session);
+		
 		JMenu change=new JMenu("Switch Encryption/Decryption Mode");
 		change.setToolTipText("<html>Clicking on this Option will allow you to switch between<br>"
 				+ "encrypting and decrypting text via the Shuffle Cipher");
@@ -269,7 +373,7 @@ public final class EncrypterFrontEnd
 			{
 		try 
 		{
-			Thread.sleep(3500);
+			Thread.sleep(1500);
 		} 
 		catch (InterruptedException e) 
 		{
@@ -429,11 +533,26 @@ b.setIcon(new ImageIcon(ba));
 //returns true in all cases where the password is valid, and false in all other cases
 public static boolean isValidPassword(String password)
 {
+if(password==null)
+{
+return false;	
+}
 if(password.contains(" ")||password.isEmpty())
 {
 return false;	
 }
 return true;
+}
+//This method sets and changes the session password status, session password will be changed to inpuuted value
+//except null or empty String, in which case session password value will be set to9 null.
+public void setSessionPassword(String psswd)
+{
+ if(psswd==null||psswd.isEmpty())
+ {
+	 EncrypterFrontEnd.session_psswd=null;
+	 return;
+ }
+ EncrypterFrontEnd.session_psswd=psswd;	
 }
 
 }
