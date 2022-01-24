@@ -1,4 +1,6 @@
 # Shuffle-Cipher-Desktop
+![DesktopEnc](https://user-images.githubusercontent.com/68727041/150776276-afa483bb-1e5e-48ee-b486-65d30a31371b.png)
+<br>
 A desktop application to encrypt your plain text!
 This desktop java GUI application helps you mantain privacy by encrypting simple text and turning it unreadable via
 a simple Cipher algorithm designed by Nikhil Narayanan.<br>
