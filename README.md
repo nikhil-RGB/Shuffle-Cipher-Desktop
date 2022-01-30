@@ -10,4 +10,4 @@ To read the source code, go into the Encrypter folder and  view all the source c
 This project is open source.<br>
 For more detailed insights on the working of the Shuffle Cipher Desktop app, check out the README of the Shuffle Cipher Web version 
 [from here](https://github.com/nikhil-RGB/Shuffle-Cipher-Web/blob/main/README.md).<br>
-Due to minor implementation differences, the desktop version and web version are not compatible currently.
+*THE SHUFFLE CIPHER DESKTOP VERSION IS NOW COMAPTIBLE WITH IT'S DESKTOP VERSION*
