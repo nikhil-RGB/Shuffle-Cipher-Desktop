@@ -29,8 +29,8 @@ public final class EncrypterFrontEnd
 	public static final String VIEW="main_panel.png";
 	public static final String CCP="cutcopy.png";
 	public static final String CONTACT="javakingxi@gmail.com";
-	public static final String WORK="https://www.swingguiking.com/my-work";
-	public static final String ABOUT="https://www.swingguiking.com";
+	public static final String WORK="https://github.com/nikhil-RGB";
+	public static final String ABOUT="https://linktr.ee/nikhil_n67";
 	public static final String RULES="<html>Enter text into the first textbox and press on the encrypt<br>"
 			+ "button to encrypt it. To decrypt it, switch between encryption and decryption modes via the option on the menu bar<br>"
 			+ "You can use ctrl+c/v/x OR the buttons provided for copy paste and cut actions on the selected text in the text area.<br>"
