@@ -184,9 +184,9 @@ decrypted text: That's mad sus!
 
 ### How to Use
 
-- Download the .jar file from the releases section.
+- Download the .zip file from the releases section.
 - Ensure you have JAVA 8/9 installed on your system.
-- Run the .jar file with your JRE/JDK.
+- Unpack the .zip file and follow the launch intructions in the release description.
 
 <br/>
 <i>Compatible with the <a href="https://github.com/nikhil-RGB/Shuffle-Cipher-Web">Web Shuffle Cipher</a></i>
