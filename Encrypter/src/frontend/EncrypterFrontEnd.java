@@ -29,7 +29,7 @@ public final class EncrypterFrontEnd
 	public static final String VIEW="main_panel.png";
 	public static final String CCP="cutcopy.png";
 	public static final String CONTACT="javakingxi@gmail.com";
-	public static final String WORK="https://github.com/nikhil-RGB";
+	public static final String WORK="https://nikhil-rgb.github.io/";
 	public static final String ABOUT="https://linktr.ee/nikhil_n67";
 	public static final String RULES="<html>Enter text into the first textbox and press on the encrypt<br>"
 			+ "button to encrypt it. To decrypt it, switch between encryption and decryption modes via the option on the menu bar<br>"
@@ -68,7 +68,7 @@ public final class EncrypterFrontEnd
         main_text.setWrapStyleWord(true);
         encrypt=new JButton("Encrypt");
         encrypt.setForeground(Color.CYAN);
-        encrypt.setFont(new Font("algerian",Font.BOLD,19));
+        encrypt.setFont(new Font("Sans Serif",Font.BOLD,19));
         
         encrypt.setToolTipText("Click here to Encrypt / Decrypt text above!");
         
@@ -260,7 +260,7 @@ public final class EncrypterFrontEnd
 		Box dec_controls=new PictureBox(BoxLayout.LINE_AXIS,CCP);
 		JLabel lab1=new JLabel("Tools");
 		lab1.setForeground(Color.CYAN);
-		lab1.setFont(new Font("algerian",Font.BOLD,19));
+		lab1.setFont(new Font("SanSerif",Font.BOLD,19));
         dec_controls.add(lab1);
         dec_controls.add(Box.createHorizontalStrut(15));
         dec_controls.add(cut_dec);
@@ -447,6 +447,30 @@ public final class EncrypterFrontEnd
 		performCrop(obj.encrypt,img);
 		obj.encrypt.setHorizontalTextPosition(SwingConstants.CENTER);
 		obj.encrypt.setBorder(BorderFactory.createLineBorder(Color.CYAN,4));
+		
+		//new event listener code-changes border according to mouse movement
+		obj.encrypt.addMouseListener(new MouseAdapter() 
+		{
+			@Override					
+			public void mouseEntered(MouseEvent me)
+			{
+				Color r=Color.green;
+				JButton source=(JButton)(me.getSource());
+				source.setBorder(BorderFactory.createLineBorder(r,4));
+				//entry point color change->cyan to green
+			}
+			@Override
+			public void mouseExited(MouseEvent me)
+			{
+				Color r=Color.cyan;
+				JButton source=(JButton)(me.getSource());
+				source.setBorder(BorderFactory.createLineBorder(r,4));
+				//exit point colour change
+			}
+		});
+		//end of new code
+		
+		
 			}
 		};
 		SwingUtilities.invokeLater(obj);
