@@ -1,5 +1,6 @@
 # Shuffle-Cipher-Desktop
-![DesktopEnc](https://user-images.githubusercontent.com/68727041/150776276-afa483bb-1e5e-48ee-b486-65d30a31371b.png)
+<img width="475" alt="encrypter-new-image" src="https://user-images.githubusercontent.com/68727041/179352762-97e25f89-33a5-4eeb-a63e-f6ee53c371d0.png">
+
 <br>
 
 ### Purpose
